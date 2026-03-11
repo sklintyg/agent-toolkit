@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# .github/copilot/pre-push
+# GitHub Copilot coding agent pre-push hook.
+# Detects the stack in the current directory and delegates to the appropriate quality script(s).
+# Exit code 0 = pass (push allowed). Non-zero = fail (push blocked).
+#
+# Supports:
+#   Java  — build.gradle or pom.xml present → runs hooks/java-quality.sh
+#   TS/JS — package.json + tsconfig.json present → runs hooks/ts-quality.sh
+#   Both  — monorepo: runs both and reports each result independently.
+
+set -euo pipefail
+
+HOOKS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/hooks" && pwd)"
+FAILED=0
+
+echo ""
+echo "╔══════════════════════════════════════════╗"
+echo "║   Copilot Pre-Push Quality Gate          ║"
+echo "╚══════════════════════════════════════════╝"
+echo ""
+
+# ── Java ─────────────────────────────────────────────────────────────────────
+if [[ -f "build.gradle" || -f "build.gradle.kts" || -f "pom.xml" ]]; then
+  echo "🟤 Java project detected — running java-quality.sh"
+  if bash "$HOOKS_DIR/java-quality.sh"; then
+    echo "✅ Java quality checks passed"
+  else
+    echo "❌ Java quality checks FAILED"
+    FAILED=1
+  fi
+  echo ""
+fi
+
+# ── TypeScript / JavaScript ───────────────────────────────────────────────────
+if [[ -f "package.json" && -f "tsconfig.json" ]]; then
+  echo "🔵 TypeScript project detected — running ts-quality.sh"
+  if bash "$HOOKS_DIR/ts-quality.sh"; then
+    echo "✅ TypeScript quality checks passed"
+  else
+    echo "❌ TypeScript quality checks FAILED"
+    FAILED=1
+  fi
+  echo ""
+fi
+
+# ── Result ───────────────────────────────────────────────────────────────────
+if [[ $FAILED -ne 0 ]]; then
+  echo "╔══════════════════════════════════════════╗"
+  echo "║  ❌  Pre-push quality gate FAILED        ║"
+  echo "║  Fix all issues above before pushing.    ║"
+  echo "╚══════════════════════════════════════════╝"
+  exit 1
+fi
+
+echo "╔══════════════════════════════════════════╗"
+echo "║  ✅  All quality checks passed           ║"
+echo "╚══════════════════════════════════════════╝"
+exit 0
