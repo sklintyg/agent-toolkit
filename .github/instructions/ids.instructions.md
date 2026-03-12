@@ -57,13 +57,24 @@ Use a `classNames()` utility to compose conditional class names.
 
 ## Themes
 
-| Theme | Import path |
-|---|---|
-| `1177` | `@inera/ids-design/themes/1177/1177.css` |
-| `1177-pro` | `@inera/ids-design/themes/1177-pro/1177-pro.css` |
-| `inera-admin` | `@inera/ids-design/themes/inera-admin/inera-admin.css` |
+**IDS v9+ CSS structure** — the old monolithic theme file is split into two required imports:
 
-- Import exactly one theme per app entry CSS file.
+```css
+/* 1. All component styles (scoped to .ids--light / .ids--dark) */
+@import '@inera/ids-design/styles.css';
+/* 2. CSS custom properties for the chosen theme (scoped to .ids--{theme}.ids--light) */
+@import '@inera/ids-design/tokens/themes/1177-pro-tokens.css';
+```
+
+| Theme | Token import path | Body classes required |
+|---|---|---|
+| `1177` | `@inera/ids-design/tokens/themes/1177-tokens.css` | `ids ids--light ids--1177` |
+| `1177-pro` | `@inera/ids-design/tokens/themes/1177-pro-tokens.css` | `ids ids--light ids--1177-pro` |
+| `inera-admin` | `@inera/ids-design/tokens/themes/inera-admin-tokens.css` | `ids ids--light ids--inera-admin` |
+
+**Critical**: In v9, all component styles are scoped to `.ids--light` or `.ids--dark`. If the app root element (typically `<body>`) only has `class="ids"` (the v7 convention), **no IDS styles will apply at all**. The body element in every `index.html` must include `ids--light` (or `ids--dark`) plus the theme class.
+
+- Import `styles.css` once, then the token file for the chosen theme.
 - Apply `inera-admin` theme class conditionally via `useTheme()` hook when a component must differ between themes.
 - Override CSS custom properties (`--IDS-*`) at `:root` level only, never inline.
 
