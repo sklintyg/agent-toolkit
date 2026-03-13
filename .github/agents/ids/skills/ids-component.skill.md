@@ -32,23 +32,7 @@ output: A ready-to-use .tsx file (and optional .css import) following the IDS wr
 
 Place the file in the repo's shared component directory, e.g. `src/components/[ComponentName]/[ComponentName].tsx`.
 
-
-```tsx
-import { IDSFoo } from '@inera/ids-react'
-import type { ComponentProps, ForwardedRef, HTMLAttributes } from 'react'
-import { forwardRef } from 'react'
-
-// Use the specific native element type that IDSFoo renders, e.g. HTMLButtonElement, HTMLAnchorElement
-type FooProps = HTMLAttributes<HTMLElement> & Omit<ComponentProps<typeof IDSFoo>, 'ref'> & {
-  // additional typed props
-}
-
-export const Foo = forwardRef(({ children, ...props }: FooProps, ref: ForwardedRef<HTMLElement>) => (
-  <IDSFoo ref={ref} {...props}>{children}</IDSFoo>
-))
-
-Foo.displayName = 'Foo'
-```
+Follow the wrapper pattern defined in `ids.instructions.md` (Wrapper pattern section). If existing wrappers are present in the repo, match their conventions exactly — they take precedence over the generic example in the instructions.
 
 ## Notes
 

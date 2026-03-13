@@ -4,7 +4,7 @@ input: Pasted release notes from the IDS release (plain text or markdown)
 output: A change map file at `.github/migration/ids-v{new}-change-map.md` — no source files are edited by this skill
 ---
 
-# Skill: IDS Release Audit
+# Skill: IDS Map Release Changes
 
 ## Steps
 
@@ -45,7 +45,7 @@ output: A change map file at `.github/migration/ids-v{new}-change-map.md` — no
 
 7. Save the full change map to `.github/migration/ids-v{new}-change-map.md` (e.g. `ids-v9-change-map.md`). Do not edit any source files.
    - Include a `## Manual Review Required` section for anything that cannot be automatically resolved (e.g. behaviour changes, new required props, layout differences).
-   - End the file with: "Run the IDS release apply skill to apply these changes."
+   - End the file with: "Run the IDS update version skill to apply these changes."
    - After saving, tell the developer the file path and ask them to review it before proceeding.
 
 ## Output Format
@@ -79,5 +79,5 @@ output: A change map file at `.github/migration/ids-v{new}-change-map.md` — no
 
 - Always process shared component wrappers first — a wrapper fix may resolve many downstream usages automatically.
 - If a component was removed with no replacement, flag it in Manual Review and stop — do not invent alternatives.
-- This skill produces one file only (the change map). All source file edits are handled by `ids-release-apply.skill.md`.
-- The `ids-release-apply.skill.md` skill reads the saved change map file — do not skip saving it.
+- This skill produces one file only (the change map). All source file edits are handled by `ids-update-version.skill.md`.
+- The `ids-update-version.skill.md` skill reads the saved change map file — do not skip saving it.

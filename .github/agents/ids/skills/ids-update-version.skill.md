@@ -1,10 +1,10 @@
 ---
-description: Apply an audited IDS release change map to the codebase. Captures baseline playwright-cli snapshots before making changes, edits all affected files, bumps package.json versions, then takes post-migration snapshots for visual comparison. Must be preceded by ids-release.skill.md.
+description: Apply an audited IDS release change map to the codebase. Captures baseline playwright-cli snapshots before making changes, edits all affected files, bumps package.json versions, then takes post-migration snapshots for visual comparison. Must be preceded by ids-map-release-changes.skill.md.
 input: Confirmed change map at `.github/migration/ids-v{new}-change-map.md`
 output: All required file edits applied + package.json version bumps + Playwright snapshots for developer review
 ---
 
-# Skill: IDS Release Apply
+# Skill: IDS Update Version
 
 ## Steps
 
@@ -89,7 +89,7 @@ output: All required file edits applied + package.json version bumps + Playwrigh
    - Any page using icons, spinners, alerts, or dialogs that were changed
    - The footer (if LayoutFooter was changed)
 
-7. Report the result:
+8. Report the result:
    - In a .md file
    - List every file edited.
    - List every `package.json` bumped.

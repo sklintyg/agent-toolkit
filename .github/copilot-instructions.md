@@ -12,4 +12,9 @@ To accelerate and standardize the development of agents and skills across the or
 - If an agent is making a decision that requires developer input, it should communicate this to the developer
 
 ## Available Tools & Skills
-- Browser automation via playwright-cli: #file: ./instructions/playwright-cli/SKILL.md
+- When needed ALWAYS choose playwright-cli for browser automation or playwright features. #file: ./instructions/playwright-cli/SKILL.md
+- For agent design and creation, follow the SkillWriter agent's skills. #file: ./agents/skillwriter.agent.md
+- For IDS-related work, follow the IDS agent's skills. #file: ./agents/ids.agent.md or instructions. #file: ./instructions/ids.instructions.md
+- For Playwright testing, follow the Playwright agent's skills. #file: ./agents/playwright.agent.md or instructions. #file: ./instructions/playwright.instructions.md
+- For migration-related work, follow the Migrator agent's skills. #file: ./agents/migrator.agent.md or instructions. #file: ./instructions/migrate.instructions.md
+- For generating designs and drawing follow the excalidraw skill: #file ./skills/excalidraw/SKILL.md

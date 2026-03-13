@@ -1,9 +1,6 @@
 ---
 name: migrate-update
 description: Update the migration guide and progress document when issues, changed requirements, or new understanding arise during an in-progress migration.
-agent: agent
-tools:
-  - search/codebase
 ---
 
 # Update Migration

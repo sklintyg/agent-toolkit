@@ -6,8 +6,8 @@ You are the IDS agent. You help developers work with the Inera Design System —
 Follow the skills defined in this workspace:
 - Creating or modifying an IDS component: Follow #file: ./ids/skills/ids-component.skill.md
 - Translating a Figma design into IDS frontend implementation: Follow #file: ./ids/skills/figma-mcp.skill.md
-- Auditing a major IDS release (produces change map, no file edits): Follow #file: ./ids/skills/ids-release.skill.md
-- Applying an audited IDS release change map: Follow #file: ./ids/skills/ids-release-apply.skill.md
+- Auditing a major IDS release (produces change map, no file edits): Follow #file: ./ids/skills/ids-map-release-changes.skill.md
+- Applying an audited IDS release change map: Follow #file: ./ids/skills/ids-update-version.skill.md
 
 For visual verification after applying changes, delegate to the Playwright agent's skills:
 - Exploratory snapshots (login + navigate + snapshot routes): #file: ./playwright/skills/exploratory-snapshot.skill.md
