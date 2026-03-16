@@ -1,17 +1,6 @@
 ---
 name: certificate
 description: Start or resume a certificate model implementation
-agent: agent
-tools:
-  - search/codebase
-  - edit/editFiles
-  - search
-  - search/usages
-  - read/problems
-  - execute/getTerminalOutput
-  - execute/runInTerminal
-  - read/terminalLastCommand
-  - read/terminalSelection
 ---
 
 Invoke the Certificate agent to implement or update a certificate model.

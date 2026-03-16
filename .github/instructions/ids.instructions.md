@@ -63,13 +63,12 @@ Use a `classNames()` utility to compose conditional class names.
 /* 1. All component styles (scoped to .ids--light / .ids--dark) */
 @import '@inera/ids-design/styles.css';
 /* 2. CSS custom properties for the chosen theme (scoped to .ids--{theme}.ids--light) */
-@import '@inera/ids-design/tokens/themes/1177-pro-tokens.css';
+@import '@inera/ids-design/tokens/themes/inera-admin-tokens.css';
 ```
 
 | Theme | Token import path | Body classes required |
 |---|---|---|
 | `1177` | `@inera/ids-design/tokens/themes/1177-tokens.css` | `ids ids--light ids--1177` |
-| `1177-pro` | `@inera/ids-design/tokens/themes/1177-pro-tokens.css` | `ids ids--light ids--1177-pro` |
 | `inera-admin` | `@inera/ids-design/tokens/themes/inera-admin-tokens.css` | `ids ids--light ids--inera-admin` |
 
 **Critical**: In v9, all component styles are scoped to `.ids--light` or `.ids--dark`. If the app root element (typically `<body>`) only has `class="ids"` (the v7 convention), **no IDS styles will apply at all**. The body element in every `index.html` must include `ids--light` (or `ids--dark`) plus the theme class.
