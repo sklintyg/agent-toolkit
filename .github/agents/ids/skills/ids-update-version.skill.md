@@ -4,6 +4,8 @@ input: Confirmed change map at `.github/migration/ids-v{new}-change-map.md`
 output: All required file edits applied + package.json version bumps + Playwright snapshots for developer review
 ---
 
+> **Note**: This skill is the simple, single-pass option. If the developer has not yet chosen between this and the Migrator agent, refer them back to `ids-map-release-changes` for guidance on which path to take.
+
 # Skill: IDS Update Version
 
 ## Steps
@@ -23,14 +25,16 @@ output: All required file edits applied + package.json version bumps + Playwrigh
 1. Confirm the developer has reviewed and approved the change map before proceeding.
    - Read the change map from `.github/migration/ids-v{new}-change-map.md`.
 
-2. Process shared component wrappers first — changes here cascade to all consumers automatically:
-   - Apply component renames (import + JSX).
-   - Update prop types and `ComponentProps<typeof IDS*>` derivations.
-   - Update CSS class strings in `classNames(...)` calls.
+2. Process changes from the map one by one — for **each change entry** (C1, C2, C3, …):
+   - Read the entry's `Grep for` pattern
+   - Search the **entire codebase** (all `.tsx`, `.ts`, `.css` files, excluding `node_modules`) for that pattern
+   - Fix every hit found, not just the example hits listed in the change map
+   - Process shared component wrappers first — a single fix there may resolve many downstream consumers automatically
 
-3. Apply changes to each remaining file in the change map:
-   - Work file by file, grouped by app.
-   - For each file: apply all changes in one edit, not multiple passes.
+3. Work through the full change list in order. For each change:
+   - Run the grep against the codebase fresh
+   - For each matched file: read the file, apply all required changes from that entry, save
+   - If no hits are found, note "already clean" and move on
 
 4. Apply deprecated pattern cleanup from the change map:
    - Replace `ids-heading-h{n}` class + raw `<h{n}>` tag with `<Heading level={n} size="...">`.
