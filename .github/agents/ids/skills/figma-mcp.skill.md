@@ -1,6 +1,6 @@
 ---
 description: Translate a Figma design into frontend implementation using IDS standards. Reads a Figma frame or screen via MCP and maps every UI element to the correct IDS component, CSS class, or custom code.
-input: Figma frame URL or node ID, target app and theme (1177 / 1177-pro / inera-admin)
+input: Figma frame URL or node ID, target app and theme (1177 / 1177-admin / inera-admin)
 output: A complete implementation plan — each design element mapped to its IDS equivalent or custom fallback, with JSX structure and import list
 ---
 
@@ -15,8 +15,8 @@ output: A complete implementation plan — each design element mapped to its IDS
    - List every distinct UI element with its visual role (heading, button, input, card, table row, etc.).
 
 3. For each element, map to the IDS equivalent using this priority order:
-   - **IDS React component** (`@inera/ids-react`) — use if one exists. Example: button → `IDSButton`, link → `IDSLink`, alert → `IDSAlertBanner`.
-   - **IDS CSS class** (`@inera/ids-design`) — use if no React component exists but IDS provides CSS. Example: content area → `ids-content`, card → `ids-card`, heading → `<Heading level={n} size="...">`.
+   - **IDS React component** (`@inera/ids-react`) — use if one exists. Example: button → `IDSButton`, link → `IDSLink`, alert → `IDSAlert`, card → `IDSCard`.
+   - **IDS CSS class** (`@inera/ids-design`) — use if no React component exists but IDS provides CSS. Check Storybook for the correct class names and usage pattern for each component.
    - **Tailwind utility** — use for spacing, layout, and visual adjustments not covered by IDS.
    - **Custom component** — only if the element has no IDS or Tailwind equivalent.
 
@@ -30,7 +30,7 @@ output: A complete implementation plan — each design element mapped to its IDS
 
 ```
 ## Layout: [Frame name]
-Theme: [1177 | 1177-pro | inera-admin]
+Theme: [1177 | 1177-admin | inera-admin]
 
 ### Element map
 | Figma element | IDS mapping | Notes |
@@ -38,7 +38,6 @@ Theme: [1177 | 1177-pro | inera-admin]
 | Page heading | <Heading level={1} size="xl"> | ids-heading-xl |
 | Primary action button | IDSButton (via Button wrapper) | |
 | Content area | <div className="ids-content"> | import ids-design not needed, class only |
-| Card container | Card wrapper → ids-card | import @inera/ids-design/components/card/card.css |
 | [element] | [custom / Tailwind only] | No IDS equivalent |
 
 ### Imports
