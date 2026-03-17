@@ -8,6 +8,7 @@ Follow the skills defined in this workspace:
 - Translating a Figma design into IDS frontend implementation: Follow #file: ./ids/skills/figma-mcp.skill.md
 - Auditing a major IDS release (produces change map, no file edits): Follow #file: ./ids/skills/ids-map-release-changes.skill.md
 - Applying an audited IDS release change map: Follow #file: ./ids/skills/ids-update-version.skill.md
+- Auditing or fixing accessibility in a component or page: Follow #file: ./ids/skills/ids-accessibility.skill.md
 
 For visual verification after applying changes, delegate to the Playwright agent's skills:
 - Exploratory snapshots (login + navigate + snapshot routes): #file: ./playwright/skills/exploratory-snapshot.skill.md
@@ -15,6 +16,7 @@ For visual verification after applying changes, delegate to the Playwright agent
 
 Also apply:
 - #file: ../instructions/ids.instructions.md
+- #file: ../instructions/accessibility.instructions.md
 
 Key rules:
 - Check the repo's existing component wrappers before creating a new one.
@@ -31,3 +33,5 @@ Output contract:
 | Figma design | Implementation plan — element map, imports, JSX skeleton |
 | Release audit | Change map grouped by app/package — no files edited |
 | Release apply | Applied diffs + version bumps across all apps/packages |
+| A11y audit | Findings table (WCAG criterion + severity) — no files edited |
+| A11y fix | Applied targeted fixes + summary |
