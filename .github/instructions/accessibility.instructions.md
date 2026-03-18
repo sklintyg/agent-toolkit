@@ -25,7 +25,7 @@ WCAG 2.2 adds the following criteria that are most relevant to IDS component wor
 ## Semantic HTML
 
 - Use the correct landmark elements: `<main>`, `<nav>`, `<header>`, `<footer>`, `<aside>`, `<section>`. Do not replace these with generic `<div>` containers.
-- Never use `<div>` or `<span>` as an interactive element — use the appropriate IDS component (`IDSButton`, `IDSLink`) or a native HTML element instead.
+- Never use `<div>` or `<span>` as an interactive element — use the appropriate IDS component (`IDSButton`, `IDSLink`) when one exists; only fall back to a native HTML element (e.g. `<button>`, `<a>`) when no IDS equivalent is available.
 - `<section>` must have an accessible name via `aria-labelledby` or `aria-label`; otherwise use `<div>`.
 
 ## Headings
@@ -139,7 +139,7 @@ Always provide a text alternative for every interactive element:
 ## Keyboard navigation
 
 - Never remove or suppress `outline` in CSS without providing an equivalent custom focus indicator.
-- All interactive elements must be reachable and operable with keyboard only.
+- All interactive elements must be reachable and operable with keyboard.
 - Custom keyboard shortcuts must not conflict with browser or assistive technology shortcuts.
 - Modal overlays must trap focus within themselves while open.
 
@@ -153,7 +153,7 @@ Always provide a text alternative for every interactive element:
 
 ## Color and contrast
 
-- Never convey information by color alone — always pair with text, icon, or pattern.
+- Flag any code where information is conveyed by color alone (no text, icon, or pattern paired with it) — raise it as a finding rather than silently accepting it. The underlying fix should come from design.
 - Do not hardcode colors with `#hex` or `rgb()` — use IDS CSS custom properties (`--IDS-COLOR-*`) which are tested for contrast.
 - Do not override `--IDS-COLOR-*` tokens at component level — only override at `:root` or the theme class level.
 
