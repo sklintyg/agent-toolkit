@@ -29,6 +29,36 @@ For each item, note its category: `component-rename` | `prop-removed` | `prop-re
 
 ---
 
+### Routing checkpoint — choose your migration path
+
+Before doing any further work, summarise the scope and ask the developer which path to take.
+
+Present these signals from Step 1:
+- Total breaking + CSS breaking changes: **N**
+- HTML structure changes present: **yes / no** (any items in category `html-structure`)
+- Apps/packages affected: **N** (count `package.json` files that declare `@inera/ids-react`)
+
+Then explain the two approaches:
+
+> **Option A — IDS agent migration**
+> The IDS agent produces a change map — a grep-driven recipe of every breaking change — then applies all changes in a single pass across the codebase. It works entirely within the IDS domain: component renames, prop changes, CSS class updates, token replacements, and version bumps. No planning documents, no incremental commits.
+>
+> **Option B — Migrator agent migration**
+> The Migrator is a structured, safety-first framework designed for large migrations. It breaks the upgrade into small verified increments — every step must leave the app in a buildable, functional state before the next begins. It produces a full set of planning documents (requirements, risk register, protected-items list, migration guide, progress tracker) and gives you explicit control and visibility at each stage. Choose this when the upgrade is large, spans many apps, or when you want rollback safety and a documented trail.
+
+Ask: **"Which path — A or B?"**
+
+**If the developer chooses Option B:**
+- Invoke `@migrator` as a subagent, passing:
+  - Migration type: `IDS v{old} → v{new} upgrade`
+  - Repo root path
+  - Release notes source URL (or note they were pasted manually)
+- **Stop here.** Do not continue with Steps 2–7. Do not create any change map file.
+
+**If the developer chooses Option A:** continue with Step 2 below.
+
+---
+
 ### Step 2 — Translate each item into a change entry
 
 For every breaking change, produce one entry:

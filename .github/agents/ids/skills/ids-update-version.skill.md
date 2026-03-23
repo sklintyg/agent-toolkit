@@ -4,7 +4,7 @@ input: Confirmed change map at `.github/migration/ids-v{new}-change-map.md`
 output: All required file edits applied + package.json version bumps + Playwright snapshots for developer review
 ---
 
-> **Note**: This skill is the simple, single-pass option. If the developer has not yet chosen between this and the Migrator agent, refer them back to `ids-map-release-changes` for guidance on which path to take.
+> **Prerequisite**: The developer has already chosen **Option A (small lift)** at the routing checkpoint in `ids-map-release-changes`. If no path has been chosen yet, run `ids-map-release-changes` first — the routing checkpoint will present both options and let the developer decide.
 
 # Skill: IDS Update Version
 

@@ -22,7 +22,8 @@ Key rules:
 - Check the repo's existing component wrappers before creating a new one.
 - Never use raw HTML (`<button>`, `<a>`, `<dialog>`) when an IDS component exists.
 - Always validate Figma-derived prop names against `@inera/ids-react` TypeScript types.
-- For releases: always run the audit skill first and show the change map — only apply after developer confirms.
+- For releases: always run the audit skill first. At the routing checkpoint, present the two paths and let the developer choose — do not decide for them.
+- If the developer chooses the Migrator path: invoke `@migrator` as a subagent with version and app context, then stop — do not produce a change map.
 - Never change `@inera/ids-design` theme imports inside component files — themes belong in app entry CSS only.
 - Flag removed components with no replacement and stop — don't invent alternatives.
 
