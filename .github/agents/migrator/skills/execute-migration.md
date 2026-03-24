@@ -1,5 +1,5 @@
 ---
-description: Execute the migration in small, quality-gated increments following a Plan → Implement → Validate → Quality Check workflow, updating the progress document after every approved increment.
+description: Execute the migration in small, quality-gated increments following a Plan → Implement → Validate → Quality Check workflow, updating the progress document after every approved increment. VALIDATE is delegated to validate-increment.md.
 input: App-specific migration guide, progress document, and repository source code
 output: Migrated source code and an up-to-date progress document
 ---
@@ -95,35 +95,21 @@ Execute the approved plan. Stay within increment scope — do not mix concerns. 
 
 ### Step 3 — ✅ VALIDATE
 
-**Purpose:** Verify the implementation compiles, passes all quality gates, and runs.
+**Purpose:** Verify the implementation compiles, passes all configured quality checks, and runs.
 
-**Actions:**
-1. **Check IDE problems** — use the `read/problems` tool. Any errors (not warnings) must be resolved before proceeding.
-2. Build: `npm run build` / `./gradlew build` / equivalent — **must pass**.
-3. Run the **full test suite** — not just tests related to this increment. A passing increment that breaks a previous one is still a failure.
-4. Verify application starts if appropriate.
-5. **Quality hooks** — if `.github/copilot/pre-push` exists, confirm the hook will run on push. If it can be run locally, run it and include the result. Hook failure is treated the same as a build failure — fix before proceeding.
+**How to run:**
+Execute `agents/migrator/skills/validate-increment.md` for the current increment.
 
-**Quality hook checks (what the hook enforces):**
+The skill will:
+1. Read `[APP]-quality-gate.md` to determine which commands to run.
+2. Run IDE problem check, build, type check, lint, tests, app start, and any custom checks.
+3. Handle command errors (config issues) separately from code failures.
+4. Produce a VALIDATION report block.
 
-| Stack | Checks |
-|-------|--------|
-| Java | Compile → Checkstyle → SpotBugs (if configured) → SonarLint BLOCKER/CRITICAL (if installed) → full test suite |
-| TypeScript | `tsc --noEmit` → ESLint `--max-warnings 0` → full Vitest/Jest suite |
-
-**Report:**
-```
-✅ VALIDATION — [Increment Name]
-
-IDE Problems (read/problems): [PASS / FAIL] [error count if any]
-Build:                        [PASS / FAIL] [details]
-Full Test Suite:              [PASS / FAIL] [X/Y passing]
-Quality Hook:                 [PASS / FAIL / NOT RUN] [details]
-Application Start:            [PASS / FAIL / SKIPPED] [details]
-
-Issues found:
-- [list any problems]
-```
+**Gate:**
+- ✅ PASS → proceed to Step 4 (QUALITY CHECK).
+- ❌ FAIL (code problem) → return to Step 2 (IMPLEMENT) with specific failures, then repeat Step 3.
+- ⚠️ Command error (config problem) → blocked until developer updates `[APP]-quality-gate.md`; do not treat as code failure.
 
 ---
 

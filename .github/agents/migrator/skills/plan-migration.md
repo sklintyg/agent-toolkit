@@ -15,6 +15,8 @@ output: A complete set of documents in .github/migration/ ready to drive Phase 2
 > migrated. This is non-negotiable. If an increment cannot be made safely self-contained, split
 > it further until it can. Increments that cannot be verified build→run→test are a planning
 > failure, not an execution problem — address them here in Phase 1.
+>
+> **🔀 Mergeable-first principle:** Beyond being buildable, each increment should ideally be **mergeable** — self-contained enough to be submitted as a PR and deployed to a test environment independently. Design for mergeability wherever possible; flag increments where it is genuinely not achievable. Pre-migration work (tech debt, risk mitigations found in risk analysis) should be structured as their own mergeable increments before migration code changes begin.
 
 ---
 
@@ -220,6 +222,50 @@ Check for **`.github/copilot/pre-push`** and **`.github/copilot/hooks/`** in the
 
 ---
 
+## Step 2.7 — Configure Quality Gate
+
+**Purpose:** Give the developer control over exactly which commands the agent runs during every VALIDATE step — build, type-check, lint, tests, app start, and any custom checks.
+
+Check for **`.github/migration/[APP]-quality-gate.md`**.
+
+- **Exists** → read it and confirm with developer:
+  ```
+  ✅ Quality Gate Config Found: .github/migration/[APP]-quality-gate.md
+
+  Configured checks:
+  - Build:      [command or "skip"]
+  - Type check: [command or "skip"]
+  - Lint:       [command or "skip"]
+  - Tests:      [command(s) or "skip"]
+  - App start:  [yes / no / high-risk increments only]
+  - Custom:     [list or "none"]
+
+  Does this look correct? Any changes before Phase 2 begins?
+  ```
+  Wait for confirmation before continuing.
+
+- **Does not exist** → create from template and ask developer to fill it in:
+  ```
+  📋 Quality Gate Config
+
+  No quality gate config found for [APP]. I'll create one from the template so you can
+  specify exactly which commands to run after every increment.
+
+  Creating: .github/migration/[APP]-quality-gate.md
+
+  Please fill in your build, test, lint, and start commands, then confirm when ready.
+  The agent will use these during every VALIDATE step in Phase 2.
+  ```
+  Copy `agents/migrator/templates/quality-gate-template.md` to
+  `.github/migration/[APP]-quality-gate.md` (replacing `[APP]` throughout).
+  **Wait for developer to confirm the file is filled in before continuing.**
+
+> **Rule for Phase 2:** The VALIDATE step in `execute-migration.md` reads
+> `[APP]-quality-gate.md` and runs **only** the commands configured there.
+> The file is the source of truth for what "passing" means on this project.
+
+---
+
 ## Step 3 — Gather Inspiration Document (Optional)
 
 Ask: *"Do you have an existing app built on [TARGET] that I can analyse for design patterns?"*
@@ -318,6 +364,8 @@ and check if anything is missing?"* (Prompt 2 follow-up from `.github/prompts/mi
 - **Each increment must leave the app in a buildable, runnable, and testable state.** This is the primary constraint when deciding how to slice work. If an increment cannot satisfy this, split it until it can. Flag any unavoidable exception with `OBSERVE` and provide a concrete mitigation plan.
 - Each increment specifies: scope, files affected, dependencies to add/remove, config changes, and **mandatory verification steps** (build command, start/smoke test, relevant unit/integration tests to run).
 - Verification steps are not optional — they are the exit criteria for the increment and must be specific enough to run without interpretation.
+- **Mergeability:** Each increment must be labelled `✅ Mergeable` or `⚠️ Non-mergeable`. A mergeable increment is self-contained enough to be submitted as a PR and deployed to a test environment on its own — nothing from future increments is required for it to function correctly. Use `⚠️ Non-mergeable` only when mergeability is genuinely not achievable (e.g. an intermediate refactor that breaks the surface until the next increment completes); always include a brief reason and the earliest increment at which the branch becomes mergeable.
+- **Pre-migration increments first:** If the risk register reveals technical debt, deprecated API usage, or architectural issues in files that will be touched during migration, structure these as standalone, mergeable increments *before* the migration work begins. This produces clean, reviewable PRs and reduces risk in subsequent migration increments.
 - Final increments must include **cleanup and optimisation** (remove deprecated patterns, dead code, legacy dependencies).
 
 **Output:** `[APP]-migration-guide.md` — the Phase 2 roadmap.
@@ -334,6 +382,7 @@ and check if anything is missing?"* (Prompt 2 follow-up from `.github/prompts/mi
 |------|--------|
 | Coverage | All layers analysed; every file to change identified; all dependencies listed; cleanup steps included |
 | Increment structure | Logical order; **every** increment leaves the app buildable, runnable, and testable (not just functional in theory); verification steps are specific commands/tests — not vague descriptions; any increment that cannot be self-contained is split or has an `OBSERVE` with mitigation |
+| Mergeability | Every increment is labelled `✅ Mergeable` or `⚠️ Non-mergeable`; `⚠️ Non-mergeable` increments have a reason and a target mergeable increment noted; tech debt / pre-migration increments (from risk register) appear before migration work and are themselves mergeable |
 | Detail level | Specific code patterns; not vague; requirements referenced; target framework best practices applied |
 | OBSERVE flags | All uncertainties marked; design decisions flagged |
 | Requirements alignment | Follows requirements doc; testing, logging, naming conventions applied |

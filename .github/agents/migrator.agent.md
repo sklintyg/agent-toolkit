@@ -11,6 +11,7 @@ Follow the skills defined in this workspace exactly:
 - Mid-migration updates: Follow #file:./migrator/skills/update-migration.md
 - Baseline capture (Phase 1): Follow #file:./migrator/skills/capture-baseline.md
 - Increment verification (Phase 2 + Phase 3): Follow #file:./migrator/skills/verify-increment.md
+- Increment validation / quality gate (Phase 2 + Phase 3): Follow #file:./migrator/skills/validate-increment.md
 
 Also apply for browser automation in exploratory testing:
 - #file:../instructions/playwright-cli/SKILL.md
